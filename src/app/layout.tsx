@@ -2,8 +2,15 @@ import "./globals.css";
 import type { ReactNode } from "react";
 import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk, Space_Mono } from "next/font/google";
+import { Header } from "@/components/site/Header";
+import { Footer } from "@/components/site/Footer";
+import { StickyCtaBar } from "@/components/site/StickyCtaBar";
 import { BackgroundWaves } from "@/components/site/BackgroundWaves";
 import { SmoothScroll } from "@/components/site/SmoothScroll";
+import { WorldCupRibbon } from "@/components/site/WorldCupRibbon";
+import { WORLD_CUP } from "@/lib/world-cup";
+import { JsonLd } from "@/components/site/JsonLd";
+import { personSchema } from "@/lib/schema";
 
 const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-inter", display: "swap" });
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-space-grotesk", display: "swap" });
@@ -32,9 +39,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${spaceMono.variable}`}>
       <body className="bg-paper text-ink flex min-h-screen flex-col antialiased">
+        {WORLD_CUP && <WorldCupRibbon />}
+        <a href="#main" className="bg-ink text-paper sr-only z-50 rounded px-4 py-2 focus:not-sr-only focus:fixed focus:top-3 focus:left-3">Skip to content</a>
         <BackgroundWaves />
         <SmoothScroll />
+        <Header />
         <main id="main" className="relative z-10 flex-1">{children}</main>
+        <Footer />
+        <div aria-hidden="true" className="h-20 sm:hidden" />
+        <StickyCtaBar />
+        <JsonLd data={personSchema()} />
       </body>
     </html>
   );
