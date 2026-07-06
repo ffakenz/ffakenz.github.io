@@ -9,7 +9,7 @@ export function Header() {
       <div className="wrap flex h-16 items-center justify-between">
         <a href="#top" aria-label={profile.name}><Logo /></a>
         <div className="flex items-center gap-4">
-          <SocialLinks className="hidden sm:flex" />
+          <SocialLinks />
           <Button href={profile.links.cv} size="sm" variant="secondary">CV</Button>
         </div>
       </div>
