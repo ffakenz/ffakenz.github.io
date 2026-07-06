@@ -22,7 +22,7 @@ export function Header() {
         </nav>
         <div className="flex items-center gap-4">
           <SocialLinks className="hidden sm:flex" />
-          <Button href={profile.links.cv} size="sm" variant="secondary">CV</Button>
+          <Button href={profile.links.cv} size="sm" variant="secondary" download>CV</Button>
         </div>
       </div>
     </header>

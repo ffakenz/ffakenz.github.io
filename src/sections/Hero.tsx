@@ -20,14 +20,14 @@ export function Hero() {
           </Reveal>
           <Reveal delayMs={280}>
             <div className="mt-9 flex flex-wrap gap-3">
-              <Button href={profile.links.linkedin} arrow>Connect on LinkedIn</Button>
-              <Button href={profile.links.cv} variant="secondary">Download CV</Button>
+              <Button href={profile.links.linkedin} arrow target="_blank" rel="noreferrer">Connect on LinkedIn</Button>
+              <Button href={profile.links.cv} variant="secondary" download>Download CV</Button>
             </div>
           </Reveal>
         </div>
         <Reveal variant="scale" delayMs={160}>
           <div className="border-line-strong relative aspect-square w-56 overflow-hidden rounded-[var(--radius)] border md:w-64">
-            <Image src="/me-gpt.png" alt={profile.name} fill sizes="256px" priority className="object-cover" />
+            <Image src="/me-gpt.webp" alt={profile.name} fill sizes="256px" priority className="object-cover" />
           </div>
         </Reveal>
       </div>

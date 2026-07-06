@@ -11,8 +11,8 @@ export function Footer() {
           <h2 className="text-h2 max-w-[16ch]">Let&apos;s build something reliable.</h2>
           <p className="text-muted mt-2 text-sm">{profile.location}</p>
           <div className="mt-5 flex flex-wrap items-center gap-4">
-            <Button href={profile.links.linkedin} arrow>Connect on LinkedIn</Button>
-            <Button href={profile.links.cv} variant="secondary">Download CV</Button>
+            <Button href={profile.links.linkedin} arrow target="_blank" rel="noreferrer">Connect on LinkedIn</Button>
+            <Button href={profile.links.cv} variant="secondary" download>Download CV</Button>
             <SocialLinks />
           </div>
         </div>
