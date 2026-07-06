@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+:root {
+  --color-paper: #14203b;
+  --color-ink: #fbfaf6;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--color-paper);
+  --color-ink: var(--color-ink);
+}
+
+body { background: var(--color-paper); color: var(--color-ink); }
