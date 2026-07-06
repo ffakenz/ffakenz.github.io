@@ -9,8 +9,13 @@ test("hero shows name and tagline", async ({ page }) => {
 
 test("contact policy: LinkedIn + GitHub, no email/whatsapp", async ({ page }) => {
   await page.goto("/");
-  await expect(page.locator('a[href="https://www.linkedin.com/in/franco-testagrossa/"]').first()).toBeVisible();
-  await expect(page.locator('a[href="https://github.com/ffakenz"]').first()).toBeVisible();
+  // The header's social icons are intentionally hidden below the `sm` breakpoint
+  // (the mobile sticky CTA bar owns LinkedIn there instead), so more than one
+  // matching link can exist in the DOM with only a subset actually visible at a
+  // given viewport. Match on `:visible` rather than DOM order (`.first()` alone)
+  // so the assertion reflects what a user can actually see/click at any size.
+  await expect(page.locator('a[href="https://www.linkedin.com/in/franco-testagrossa/"]:visible').first()).toBeVisible();
+  await expect(page.locator('a[href="https://github.com/ffakenz"]:visible').first()).toBeVisible();
   expect(await page.locator('a[href^="mailto:"]').count()).toBe(0);
   expect(await page.locator('a[href*="wa.me"], a[href*="whatsapp"]').count()).toBe(0);
 });
@@ -54,4 +59,11 @@ test("skills section shows groups", async ({ page }) => {
 test("education shows the university", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByText("Universidad Blas Pascal", { exact: false }).first()).toBeVisible();
+});
+
+test("no horizontal overflow on mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 800 });
+  await page.goto("/");
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  expect(overflow).toBeLessThanOrEqual(1);
 });
