@@ -21,7 +21,37 @@ test("CV download link is present", async ({ page }) => {
 });
 
 test("no accessibility violations", async ({ page }) => {
+  // Reveal (src/components/site/Reveal.tsx) intentionally skips its mount-triggered
+  // hide/reveal opacity transition under prefers-reduced-motion, so reduced-motion
+  // and no-JS users always see fully-opaque content. Scanning under that same media
+  // feature is what makes the check deterministic: without it, axe can sample the
+  // page mid-transition (a transient, non-representative opacity) instead of the
+  // settled, fully-visible state — a false positive unrelated to the actual palette.
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);
+});
+
+test("about section shows origin", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByText("raised in Argentina", { exact: false })).toBeVisible();
+});
+
+test("experience lists all five companies", async ({ page }) => {
+  await page.goto("/");
+  for (const c of ["Input Output (IOHK)", "Valsea IT", "Letgo", "Tiendanube", "Wicom"]) {
+    await expect(page.getByRole("heading", { name: c })).toBeVisible();
+  }
+});
+
+test("skills section shows groups", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByText("Languages", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("Scala (9y)", { exact: false })).toBeVisible();
+});
+
+test("education shows the university", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByText("Universidad Blas Pascal", { exact: false }).first()).toBeVisible();
 });
