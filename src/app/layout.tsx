@@ -2,6 +2,8 @@ import "./globals.css";
 import type { ReactNode } from "react";
 import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk, Space_Mono } from "next/font/google";
+import { BackgroundWaves } from "@/components/site/BackgroundWaves";
+import { SmoothScroll } from "@/components/site/SmoothScroll";
 
 const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-inter", display: "swap" });
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-space-grotesk", display: "swap" });
@@ -30,6 +32,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${spaceMono.variable}`}>
       <body className="bg-paper text-ink flex min-h-screen flex-col antialiased">
+        <BackgroundWaves />
+        <SmoothScroll />
         <main id="main" className="relative z-10 flex-1">{children}</main>
       </body>
     </html>
